@@ -1,0 +1,17 @@
+[imap]
+host = imap.gmail.com
+user = dmarcbot@gmail.com
+password = tjmruyjxvbbjrnuc
+
+[mailbox]
+watch = True
+delete = False
+
+[general]
+save_aggregate = True
+save_forensic = True
+output = /output/
+
+[elasticsearch]
+hosts = elasticsearch:9200
+ssl = False

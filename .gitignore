@@ -3,3 +3,4 @@
 /parsedmarc/GeoLite2-Country*
 /elastic_data/
 /grafana/.Dockerfile.swp
+/parsedmarc/parsedmarc.ini
