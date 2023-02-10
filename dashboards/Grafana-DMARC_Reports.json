@@ -308,7 +308,8 @@
       "title": "DKIM Alignment",
       "transparent": true,
       "type": "grafana-piechart-panel",
-      "valueName": "total"
+      "valueName": "total",
+      "interval": "auto"
     },
     {
       "aliasColors": {
@@ -401,7 +402,8 @@
       "title": "DMARC Passage",
       "transparent": true,
       "type": "grafana-piechart-panel",
-      "valueName": "total"
+      "valueName": "total",
+      "interval": "auto"
     },
     {
       "aliasColors": {
@@ -554,7 +556,8 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      }
+      },
+      "interval": "auto"
     },
     {
       "aliasColors": {
@@ -843,7 +846,8 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      }
+      },
+      "interval": "auto"
     },
     {
       "aliasColors": {
@@ -985,7 +989,8 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      }
+      },
+      "interval": "auto"
     },
     {
       "aliasColors": {
@@ -1127,9 +1132,11 @@
       "yaxis": {
         "align": false,
         "alignLevel": null
-      }
+      },
+      "interval": "auto"
     },
     {
+      "interval": "auto",
       "aliasColors": {
         "none": "dark-green",
         "quarantine": "semi-dark-orange",
@@ -1268,6 +1275,7 @@
       }
     },
     {
+      "interval": "auto",
       "cacheTimeout": null,
       "datasource": "$datasourceag",
       "fieldConfig": {
@@ -1360,6 +1368,7 @@
       "type": "stat"
     },
     {
+      "interval": "auto",
       "datasource": "$datasourceag",
       "fieldConfig": {
         "defaults": {
@@ -1492,6 +1501,7 @@
       "type": "table"
     },
     {
+      "interval": "auto",
       "datasource": "$datasourceag",
       "fieldConfig": {
         "defaults": {
@@ -1675,6 +1685,7 @@
       "type": "table"
     },
     {
+      "interval": "auto",
       "datasource": "$datasourceag",
       "fieldConfig": {
         "defaults": {
