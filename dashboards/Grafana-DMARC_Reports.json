@@ -560,6 +560,7 @@
       "interval": "auto"
     },
     {
+      "interval": "auto",
       "aliasColors": {
         "Pass": "dark-green",
         "fail": "dark-red",
