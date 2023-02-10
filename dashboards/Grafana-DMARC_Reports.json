@@ -1276,7 +1276,6 @@
       }
     },
     {
-      "interval": "auto",
       "cacheTimeout": null,
       "datasource": "$datasourceag",
       "fieldConfig": {
