@@ -1,79 +1,40 @@
 {
-  "__inputs": [],
-  "__requires": [
-    {
-      "type": "datasource",
-      "id": "elasticsearch",
-      "name": "Elasticsearch",
-      "version": "7.11.2"
-    },
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "8.5.4"
-    },
-    {
-      "type": "panel",
-      "id": "grafana-piechart-panel",
-      "name": "Pie Chart",
-      "version": "1.6.1"
-    },
-    {
-      "type": "panel",
-      "id": "grafana-worldmap-panel",
-      "name": "Worldmap Panel",
-      "version": "0.3.2"
-    },
-    {
-      "type": "panel",
-      "id": "graph",
-      "name": "Graph",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "stat",
-      "name": "Stat",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "table",
-      "name": "Table",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "text",
-      "name": "Text",
-      "version": "7.4.5"
-    }
-  ],
   "annotations": {
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "description": "Dashboard for reviewing reports from ParseDMARC",
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
-  "iteration": 1616327630073,
+  "iteration": 1676012902297,
   "links": [],
+  "liveNow": true,
   "panels": [
     {
       "collapsed": true,
-      "datasource": null,
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "P908EE4D5633EB9E4"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -83,14 +44,6 @@
       "id": 28,
       "panels": [
         {
-          "content": "# DMARC Summary\r\nAs the name suggests, this dashboard is the best place to start reviewing your aggregate DMARC data.\r\n\r\nAcross the top of the dashboard, three pie charts display the percentage of alignment pass/fail for SPF, DKIM, and DMARC. Clicking on any chart segment will filter for that value.\r\n\r\n***Note***\r\nMessages should not be considered malicious just because they failed to pass DMARC; especially if you have just started collecting data. It may be a legitimate service that needs SPF and DKIM configured correctly.\r\n\r\nStart by filtering the results to only show failed DKIM alignment. While DMARC passes if a message passes SPF or DKIM alignment, only DKIM alignment remains valid when a message is forwarded without changing the from address, which is often caused by a mailbox forwarding rule. This is because DKIM signatures are part of the message headers, whereas SPF relies on SMTP session headers.\r\n\r\nUnderneath the pie charts. you can see graphs of DMARC passage and message disposition over time.\r\n\r\nUnder the graphs you will find the most useful data tables on the dashboard. On the left, there is a list of organizations that are sending you DMARC reports. In the center, there is a list of sending servers grouped by the base domain in their reverse DNS. On the right, there is a list of email from domains, sorted by message volume.\r\n\r\nBy hovering your mouse over a data table value and using the magnifying glass icons, you can filter on or filter out different values. Start by looking at the Message Sources by Reverse DNS table. Find a sender that you recognize, such as an email marketing service, hover over it, and click on the plus (+) magnifying glass icon, to add a filter that only shows results for that sender. Now, look at the Message From Header table to the right. That shows you the domains that a sender is sending as, which might tell you which brand/business is using a particular service. With that information, you can contact them and have them set up DKIM.\r\n\r\n***Note***\r\nIf you have a lot of B2C customers, you may see a high volume of emails as your domains coming from consumer email services, such as Google/Gmail and Yahoo! This occurs when customers have mailbox rules in place that forward emails from an old account to a new account, which is why DKIM authentication is so important, as mentioned earlier. Similar patterns may be observed with businesses who send from reverse DNS addressees of parent, subsidiary, and outdated brands.\r\n\r\n***Note***\r\nYou can add your own custom temporary filters by clicking on Add Filter at the upper right of the page.\r\n\r\n# DMARC Forensic Samples\r\nThe DMARC Forensic Samples section contains information on DMARC forensic reports (also known as failure reports or ruf reports). These reports contain samples of emails that have failed to pass DMARC.\r\n\r\n***Note***\r\nMost recipients do not send forensic/failure/ruf reports at all to avoid privacy leaks. Some recipients (notably Chinese webmail services) will only supply the headers of sample emails. Very few provide the entire email.\r\n\r\n# DMARC Alignment Guide\r\nDMARC ensures that SPF and DKIM authentication mechanisms actually authenticate against the same domain that the end user sees.\r\n\r\nA message passes a DMARC check by passing DKIM or SPF, **as long as the related indicators are also in alignment.**\r\n\r\n|           \t| DKIM                                                                                                                                             \t| SPF                                                                                                            \t|\r\n|-----------\t|--------------------------------------------------------------------------------------------------------------------------------------------------\t|----------------------------------------------------------------------------------------------------------------\t|\r\n| **Passing**   \t| The signature in the DKIM header is validated using a public key that is published as a DNS record of the domain name specified in the signature \t| The mail server's IP address is listed in the SPF record of the domain in the SMTP envelope's mail from header \t|\r\n| **Alignment** \t| The signing domain aligns with the domain in the message's from header                                                                           \t| The domain in the SMTP envelope's mail from header aligns with the domain in the message's from header         \t|\r\n\r\n\r\n# Further Reading\r\n[Demystifying DMARC: A guide to preventing email spoofing](https://seanthegeek.net/459/demystifying-dmarc/amp/)\r\n\r\n[DMARC Manual](https://menainfosec.com/wp-content/uploads/2017/12/DMARC_Service_Manual.pdf)\r\n\r\n[What is “External Destination Verification”?](https://dmarcian.com/what-is-external-destination-verification/)",
-          "datasource": null,
-          "fieldConfig": {
-            "defaults": {
-              "custom": {}
-            },
-            "overrides": []
-          },
           "gridPos": {
             "h": 12,
             "w": 23,
@@ -99,15 +52,11 @@
           },
           "id": 26,
           "links": [],
-          "mode": "markdown",
           "options": {
             "content": "# DMARC Summary\r\nAs the name suggests, this dashboard is the best place to start reviewing your aggregate DMARC data.\r\n\r\nAcross the top of the dashboard, three pie charts display the percentage of alignment pass/fail for SPF, DKIM, and DMARC. Clicking on any chart segment will filter for that value.\r\n\r\n***Note***\r\nMessages should not be considered malicious just because they failed to pass DMARC; especially if you have just started collecting data. It may be a legitimate service that needs SPF and DKIM configured correctly.\r\n\r\nStart by filtering the results to only show failed DKIM alignment. While DMARC passes if a message passes SPF or DKIM alignment, only DKIM alignment remains valid when a message is forwarded without changing the from address, which is often caused by a mailbox forwarding rule. This is because DKIM signatures are part of the message headers, whereas SPF relies on SMTP session headers.\r\n\r\nUnderneath the pie charts. you can see graphs of DMARC passage and message disposition over time.\r\n\r\nUnder the graphs you will find the most useful data tables on the dashboard. On the left, there is a list of organizations that are sending you DMARC reports. In the center, there is a list of sending servers grouped by the base domain in their reverse DNS. On the right, there is a list of email from domains, sorted by message volume.\r\n\r\nBy hovering your mouse over a data table value and using the magnifying glass icons, you can filter on or filter out different values. Start by looking at the Message Sources by Reverse DNS table. Find a sender that you recognize, such as an email marketing service, hover over it, and click on the plus (+) magnifying glass icon, to add a filter that only shows results for that sender. Now, look at the Message From Header table to the right. That shows you the domains that a sender is sending as, which might tell you which brand/business is using a particular service. With that information, you can contact them and have them set up DKIM.\r\n\r\n***Note***\r\nIf you have a lot of B2C customers, you may see a high volume of emails as your domains coming from consumer email services, such as Google/Gmail and Yahoo! This occurs when customers have mailbox rules in place that forward emails from an old account to a new account, which is why DKIM authentication is so important, as mentioned earlier. Similar patterns may be observed with businesses who send from reverse DNS addressees of parent, subsidiary, and outdated brands.\r\n\r\n***Note***\r\nYou can add your own custom temporary filters by clicking on Add Filter at the upper right of the page.\r\n\r\n# DMARC Forensic Samples\r\nThe DMARC Forensic Samples section contains information on DMARC forensic reports (also known as failure reports or ruf reports). These reports contain samples of emails that have failed to pass DMARC.\r\n\r\n***Note***\r\nMost recipients do not send forensic/failure/ruf reports at all to avoid privacy leaks. Some recipients (notably Chinese webmail services) will only supply the headers of sample emails. Very few provide the entire email.\r\n\r\n# DMARC Alignment Guide\r\nDMARC ensures that SPF and DKIM authentication mechanisms actually authenticate against the same domain that the end user sees.\r\n\r\nA message passes a DMARC check by passing DKIM or SPF, **as long as the related indicators are also in alignment.**\r\n\r\n|           \t| DKIM                                                                                                                                             \t| SPF                                                                                                            \t|\r\n|-----------\t|--------------------------------------------------------------------------------------------------------------------------------------------------\t|----------------------------------------------------------------------------------------------------------------\t|\r\n| **Passing**   \t| The signature in the DKIM header is validated using a public key that is published as a DNS record of the domain name specified in the signature \t| The mail server's IP address is listed in the SPF record of the domain in the SMTP envelope's mail from header \t|\r\n| **Alignment** \t| The signing domain aligns with the domain in the message's from header                                                                           \t| The domain in the SMTP envelope's mail from header aligns with the domain in the message's from header         \t|\r\n\r\n\r\n# Further Reading\r\n[Demystifying DMARC: A guide to preventing email spoofing](https://seanthegeek.net/459/demystifying-dmarc/amp/)\r\n\r\n[DMARC Manual](https://menainfosec.com/wp-content/uploads/2017/12/DMARC_Service_Manual.pdf)\r\n\r\n[What is “External Destination Verification”?](https://dmarcian.com/what-is-external-destination-verification/)",
             "mode": "markdown"
           },
-          "pluginVersion": "7.1.0",
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "",
+          "pluginVersion": "8.5.4",
           "transparent": true,
           "type": "text"
         }
@@ -117,7 +66,10 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "P908EE4D5633EB9E4"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -130,25 +82,58 @@
       "type": "row"
     },
     {
-      "aliasColors": {
-        "false": "#E0B400",
-        "true": "#37872D"
+      "datasource": {
+        "uid": "$datasourceag"
       },
-      "breakPoint": "50%",
-      "cacheTimeout": null,
-      "combine": {
-        "label": "Others",
-        "threshold": 0
-      },
-      "datasource": "$datasourceag",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "none"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "false"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#E0B400",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "true"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#37872D",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
-      "fontSize": "120%",
-      "format": "none",
       "gridPos": {
         "h": 9,
         "w": 8,
@@ -156,18 +141,29 @@
         "y": 2
       },
       "id": 6,
-      "fixed_interval": "auto",
-      "legend": {
-        "percentage": false,
-        "show": true,
-        "values": false
-      },
-      "legendType": "Right side",
+      "interval": "auto",
       "links": [],
       "maxDataPoints": 3,
-      "nullPointMode": "connected",
-      "pieType": "donut",
-      "strokeWidth": "4",
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "right",
+          "values": []
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
       "targets": [
         {
           "alias": "",
@@ -179,7 +175,6 @@
               "id": "3",
               "settings": {
                 "min_doc_count": 1,
-                "missing": null,
                 "order": "desc",
                 "orderBy": "_term",
                 "size": "0"
@@ -214,34 +209,64 @@
           "timeField": "date_range"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "SPF Alignment",
       "transparent": true,
-      "type": "grafana-piechart-panel",
-      "valueName": "total",
-      "interval": "auto"
+      "type": "piechart"
     },
     {
-      "aliasColors": {
-        "false": "#E0B400",
-        "true": "#37872D"
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "$datasourceag"
       },
-      "breakPoint": "50%",
-      "cacheTimeout": null,
-      "combine": {
-        "label": "Others",
-        "threshold": 0
-      },
-      "datasource": "$datasourceag",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "none"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "false"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#E0B400",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "true"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#37872D",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
-      "fontSize": "120%",
-      "format": "none",
       "gridPos": {
         "h": 9,
         "w": 8,
@@ -249,18 +274,29 @@
         "y": 2
       },
       "id": 2,
-      "fixed_interval": null,
-      "legend": {
-        "percentage": false,
-        "show": true,
-        "values": false
-      },
-      "legendType": "Right side",
+      "interval": "auto",
       "links": [],
       "maxDataPoints": 3,
-      "nullPointMode": "connected",
-      "pieType": "donut",
-      "strokeWidth": "4",
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "right",
+          "values": []
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
       "targets": [
         {
           "bucketAggs": [
@@ -270,7 +306,6 @@
               "id": "3",
               "settings": {
                 "min_doc_count": 1,
-                "missing": null,
                 "order": "desc",
                 "orderBy": "_term",
                 "size": "0"
@@ -282,12 +317,17 @@
               "id": "2",
               "settings": {
                 "fixed_interval": "auto",
+                "interval": "auto",
                 "min_doc_count": 0,
                 "trimEdges": 0
               },
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "P908EE4D5633EB9E4"
+          },
           "hide": false,
           "metrics": [
             {
@@ -303,35 +343,65 @@
           "timeField": "date_range"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "DKIM Alignment",
       "transparent": true,
-      "type": "grafana-piechart-panel",
-      "valueName": "total",
-      "interval": "auto"
+      "type": "piechart"
     },
     {
-      "aliasColors": {
-        "false": "#C4162A",
-        "true": "#37872D"
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "$datasourceag"
       },
-      "breakPoint": "50%",
-      "cacheTimeout": null,
-      "combine": {
-        "label": "Others",
-        "threshold": 0
-      },
-      "datasource": "$datasourceag",
       "description": "",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "none"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "false"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#C4162A",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "true"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#37872D",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
-      "fontSize": "120%",
-      "format": "none",
       "gridPos": {
         "h": 9,
         "w": 8,
@@ -339,19 +409,29 @@
         "y": 2
       },
       "id": 5,
-      "fixed_interval": null,
-      "legend": {
-        "header": "",
-        "percentage": false,
-        "show": true,
-        "values": false
-      },
-      "legendType": "Right side",
+      "interval": "auto",
       "links": [],
       "maxDataPoints": 3,
-      "nullPointMode": "connected",
-      "pieType": "donut",
-      "strokeWidth": "4",
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "right",
+          "values": []
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
       "targets": [
         {
           "bucketAggs": [
@@ -362,7 +442,6 @@
               "id": "3",
               "settings": {
                 "min_doc_count": 1,
-                "missing": null,
                 "order": "desc",
                 "orderBy": "_term",
                 "size": "0"
@@ -381,11 +460,16 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "P908EE4D5633EB9E4"
+          },
           "hide": false,
           "metrics": [
             {
               "$$hashKey": "object:383",
               "field": "message_count",
+              "hide": false,
               "id": "1",
               "meta": {},
               "settings": {},
@@ -397,13 +481,9 @@
           "timeField": "date_range"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "DMARC Passage",
       "transparent": true,
-      "type": "grafana-piechart-panel",
-      "valueName": "total",
-      "interval": "auto"
+      "type": "piechart"
     },
     {
       "aliasColors": {
@@ -419,14 +499,14 @@
         "true": "dark-green"
       },
       "bars": false,
-      "cacheTimeout": null,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasourceag",
-      "decimals": null,
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "$datasourceag"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": [
             {
               "title": "",
@@ -446,6 +526,7 @@
       },
       "hiddenSeries": false,
       "id": 33,
+      "interval": "auto",
       "legend": {
         "alignAsTable": true,
         "avg": false,
@@ -467,7 +548,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.4",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -484,7 +565,6 @@
               "id": "3",
               "settings": {
                 "min_doc_count": 1,
-                "missing": null,
                 "order": "desc",
                 "orderBy": "_term",
                 "size": "0"
@@ -496,12 +576,17 @@
               "id": "2",
               "settings": {
                 "fixed_interval": "1d",
+                "interval": "auto",
                 "min_doc_count": 0,
                 "trimEdges": 0
               },
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "P908EE4D5633EB9E4"
+          },
           "hide": false,
           "metrics": [
             {
@@ -518,9 +603,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "SPF Results Over Time",
       "tooltip": {
         "shared": true,
@@ -529,38 +612,27 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "none",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
-      },
-      "interval": "auto"
+        "align": false
+      }
     },
     {
-      "interval": "auto",
       "aliasColors": {
         "Pass": "dark-green",
         "fail": "dark-red",
@@ -573,14 +645,14 @@
         "true": "dark-green"
       },
       "bars": false,
-      "cacheTimeout": null,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasourceag",
-      "decimals": null,
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "$datasourceag"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -595,6 +667,7 @@
       },
       "hiddenSeries": false,
       "id": 19,
+      "interval": "auto",
       "legend": {
         "alignAsTable": true,
         "avg": false,
@@ -616,7 +689,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.4",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -633,7 +706,6 @@
               "id": "3",
               "settings": {
                 "min_doc_count": 1,
-                "missing": null,
                 "order": "desc",
                 "orderBy": "_term",
                 "size": "0"
@@ -645,12 +717,17 @@
               "id": "2",
               "settings": {
                 "fixed_interval": "1d",
+                "interval": "auto",
                 "min_doc_count": 0,
                 "trimEdges": 0
               },
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "P908EE4D5633EB9E4"
+          },
           "hide": false,
           "metrics": [
             {
@@ -667,9 +744,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "DKIM Results Over Time",
       "tooltip": {
         "shared": true,
@@ -678,33 +753,24 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "none",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -713,14 +779,14 @@
         "true": "dark-green"
       },
       "bars": false,
-      "cacheTimeout": null,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasourceag",
-      "decimals": null,
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "$datasourceag"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -735,6 +801,7 @@
       },
       "hiddenSeries": false,
       "id": 18,
+      "interval": "auto",
       "legend": {
         "alignAsTable": true,
         "avg": false,
@@ -756,7 +823,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.4",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -773,7 +840,6 @@
               "id": "3",
               "settings": {
                 "min_doc_count": 1,
-                "missing": null,
                 "order": "desc",
                 "orderBy": "_term",
                 "size": "0"
@@ -785,21 +851,24 @@
               "id": "2",
               "settings": {
                 "fixed_interval": "1d",
+                "interval": "auto",
                 "min_doc_count": 0,
                 "trimEdges": 0
               },
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "P908EE4D5633EB9E4"
+          },
           "hide": false,
           "metrics": [
             {
               "field": "message_count",
               "id": "1",
               "meta": {},
-              "settings": {
-                "missing": null
-              },
+              "settings": {},
               "type": "sum"
             }
           ],
@@ -809,9 +878,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "SPF Alignment Over Time",
       "tooltip": {
         "shared": true,
@@ -820,35 +887,25 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "none",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
-      },
-      "interval": "auto"
+        "align": false
+      }
     },
     {
       "aliasColors": {
@@ -856,14 +913,13 @@
         "true": "dark-green"
       },
       "bars": false,
-      "cacheTimeout": null,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasourceag",
-      "decimals": null,
+      "datasource": {
+        "uid": "$datasourceag"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -878,6 +934,7 @@
       },
       "hiddenSeries": false,
       "id": 34,
+      "interval": "auto",
       "legend": {
         "alignAsTable": true,
         "avg": false,
@@ -899,7 +956,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.4",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -916,7 +973,6 @@
               "id": "3",
               "settings": {
                 "min_doc_count": 1,
-                "missing": null,
                 "order": "desc",
                 "orderBy": "_term",
                 "size": "0"
@@ -940,9 +996,7 @@
               "field": "message_count",
               "id": "1",
               "meta": {},
-              "settings": {
-                "missing": null
-              },
+              "settings": {},
               "type": "sum"
             }
           ],
@@ -952,9 +1006,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "DKIM Alignment Over Time",
       "tooltip": {
         "shared": true,
@@ -963,35 +1015,25 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "none",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
-      },
-      "interval": "auto"
+        "align": false
+      }
     },
     {
       "aliasColors": {
@@ -999,14 +1041,13 @@
         "true": "dark-green"
       },
       "bars": false,
-      "cacheTimeout": null,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasourceag",
-      "decimals": null,
+      "datasource": {
+        "uid": "$datasourceag"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -1021,6 +1062,7 @@
       },
       "hiddenSeries": false,
       "id": 7,
+      "interval": "auto",
       "legend": {
         "alignAsTable": true,
         "avg": false,
@@ -1042,7 +1084,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.4",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1059,7 +1101,6 @@
               "id": "3",
               "settings": {
                 "min_doc_count": 1,
-                "missing": null,
                 "order": "desc",
                 "orderBy": "_term",
                 "size": "0"
@@ -1083,9 +1124,7 @@
               "field": "message_count",
               "id": "1",
               "meta": {},
-              "settings": {
-                "missing": null
-              },
+              "settings": {},
               "type": "sum"
             }
           ],
@@ -1095,9 +1134,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "DMARC Passage Over Time",
       "tooltip": {
         "shared": true,
@@ -1106,51 +1143,40 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "none",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
-      },
-      "interval": "auto"
+        "align": false
+      }
     },
     {
-      "interval": "auto",
       "aliasColors": {
         "none": "dark-green",
         "quarantine": "semi-dark-orange",
         "reject": "red"
       },
       "bars": false,
-      "cacheTimeout": null,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasourceag",
+      "datasource": {
+        "uid": "$datasourceag"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -1165,6 +1191,7 @@
       },
       "hiddenSeries": false,
       "id": 8,
+      "interval": "auto",
       "legend": {
         "alignAsTable": true,
         "avg": false,
@@ -1184,7 +1211,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.4",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1201,7 +1228,6 @@
               "id": "3",
               "settings": {
                 "min_doc_count": 1,
-                "missing": null,
                 "order": "desc",
                 "orderBy": "_term",
                 "size": "0"
@@ -1235,9 +1261,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Message Disposition Over Time",
       "tooltip": {
         "shared": true,
@@ -1246,49 +1270,43 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
-      "cacheTimeout": null,
-      "datasource": "$datasourceag",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "$datasourceag"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "displayName": "Total Message Count",
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -1304,6 +1322,7 @@
         },
         "overrides": []
       },
+      "fixed_interval": "$interval",
       "gridPos": {
         "h": 4,
         "w": 12,
@@ -1311,7 +1330,6 @@
         "y": 38
       },
       "id": 36,
-      "fixed_interval": "$interval",
       "links": [],
       "options": {
         "colorMode": "background",
@@ -1328,7 +1346,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "bucketAggs": [
@@ -1339,12 +1357,17 @@
               "id": "6",
               "settings": {
                 "fixed_interval": "auto",
+                "interval": "auto",
                 "min_doc_count": 0,
                 "trimEdges": 0
               },
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "P908EE4D5633EB9E4"
+          },
           "hide": false,
           "metrics": [
             {
@@ -1361,30 +1384,21 @@
           "timeField": "date_range"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "",
       "transparent": true,
       "type": "stat"
     },
     {
-      "interval": "auto",
-      "datasource": "$datasourceag",
+      "datasource": {
+        "uid": "$datasourceag"
+      },
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": null,
-            "filterable": false
+            "displayMode": "auto",
+            "filterable": false,
+            "inspect": false
           },
-          "mappings": [
-            {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1
-            }
-          ],
+          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1437,8 +1451,16 @@
         "y": 38
       },
       "id": 10,
+      "interval": "auto",
       "links": [],
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": [
           {
@@ -1447,7 +1469,7 @@
           }
         ]
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "bucketAggs": [
@@ -1482,8 +1504,6 @@
           "timeField": "date_range"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Top 2000 Message Sources by Reverse DNS",
       "transformations": [
         {
@@ -1501,13 +1521,15 @@
       "type": "table"
     },
     {
-      "interval": "auto",
-      "datasource": "$datasourceag",
+      "datasource": {
+        "uid": "$datasourceag"
+      },
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": null,
-            "filterable": false
+            "displayMode": "auto",
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -1574,8 +1596,16 @@
         "y": 42
       },
       "id": 9,
+      "interval": "auto",
       "links": [],
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": [
           {
@@ -1584,7 +1614,7 @@
           }
         ]
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "bucketAggs": [
@@ -1595,7 +1625,6 @@
               "id": "7",
               "settings": {
                 "min_doc_count": "1",
-                "missing": null,
                 "order": "desc",
                 "orderBy": "4",
                 "size": "0"
@@ -1641,7 +1670,6 @@
               "id": "6",
               "settings": {
                 "min_doc_count": 1,
-                "missing": null,
                 "order": "desc",
                 "orderBy": "4",
                 "size": "0"
@@ -1665,8 +1693,6 @@
           "timeField": "date_range"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Reporting Organisations",
       "transformations": [
         {
@@ -1685,13 +1711,15 @@
       "type": "table"
     },
     {
-      "interval": "auto",
-      "datasource": "$datasourceag",
+      "datasource": {
+        "uid": "$datasourceag"
+      },
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": null,
-            "filterable": false
+            "displayMode": "auto",
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -1764,8 +1792,16 @@
         "y": 46
       },
       "id": 11,
+      "interval": "auto",
       "links": [],
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": [
           {
@@ -1774,7 +1810,7 @@
           }
         ]
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "bucketAggs": [
@@ -1809,8 +1845,6 @@
           "timeField": "date_range"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Message Volume by Header From",
       "transformations": [
         {
@@ -1835,15 +1869,12 @@
         "#FA6400",
         "#C4162A"
       ],
-      "datasource": "$datasourceag",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "$datasourceag"
+      },
       "decimals": 0,
       "esMetric": "Count",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "gridPos": {
         "h": 10,
         "w": 16,
@@ -1893,12 +1924,17 @@
               "id": "6",
               "settings": {
                 "fixed_interval": "auto",
+                "interval": "auto",
                 "min_doc_count": 0,
                 "trimEdges": 0
               },
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "P908EE4D5633EB9E4"
+          },
           "hide": false,
           "metrics": [
             {
@@ -1916,8 +1952,6 @@
         }
       ],
       "thresholds": "10,500",
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Map of Message Source Countries",
       "type": "grafana-worldmap-panel",
       "unitPlural": "",
@@ -1926,12 +1960,15 @@
       "valueName": "total"
     },
     {
-      "datasource": "$datasourceag",
+      "datasource": {
+        "uid": "$datasourceag"
+      },
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": null,
-            "filterable": false
+            "displayMode": "auto",
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -2000,6 +2037,13 @@
       "id": 39,
       "links": [],
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": [
           {
@@ -2008,7 +2052,7 @@
           }
         ]
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "bucketAggs": [
@@ -2043,8 +2087,6 @@
           "timeField": "date_range"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Message Source Countries",
       "transformations": [
         {
@@ -2062,12 +2104,15 @@
       "type": "table"
     },
     {
-      "datasource": "$datasourceag",
+      "datasource": {
+        "uid": "$datasourceag"
+      },
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": null,
-            "filterable": false
+            "displayMode": "auto",
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -2219,6 +2264,7 @@
           }
         ]
       },
+      "fixed_interval": "1d",
       "gridPos": {
         "h": 9,
         "w": 24,
@@ -2226,9 +2272,15 @@
         "y": 63
       },
       "id": 41,
-      "fixed_interval": "1d",
       "links": [],
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": [
           {
@@ -2237,7 +2289,7 @@
           }
         ]
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "bucketAggs": [
@@ -2290,7 +2342,6 @@
               "id": "9",
               "settings": {
                 "min_doc_count": 1,
-                "missing": null,
                 "order": "desc",
                 "orderBy": "4",
                 "size": "50"
@@ -2412,8 +2463,6 @@
           "timeField": "date_range"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Overview",
       "transformations": [
         {
@@ -2458,29 +2507,27 @@
       "type": "table"
     },
     {
-      "datasource": "$datasourceag",
+      "datasource": {
+        "uid": "$datasourceag"
+      },
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": null,
-            "filterable": false
+            "displayMode": "auto",
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [
             {
-              "from": "",
-              "id": 0,
-              "text": "relaxed",
-              "to": "",
-              "type": 1,
-              "value": "r"
-            },
-            {
-              "from": "",
-              "id": 1,
-              "text": "strict",
-              "to": "",
-              "type": 1,
-              "value": "s"
+              "options": {
+                "r": {
+                  "text": "relaxed"
+                },
+                "s": {
+                  "text": "strict"
+                }
+              },
+              "type": "value"
             }
           ],
           "thresholds": {
@@ -2628,6 +2675,7 @@
           }
         ]
       },
+      "fixed_interval": "86399",
       "gridPos": {
         "h": 9,
         "w": 24,
@@ -2635,9 +2683,15 @@
         "y": 72
       },
       "id": 43,
-      "fixed_interval": "86399",
       "links": [],
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": [
           {
@@ -2646,7 +2700,7 @@
           }
         ]
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "bucketAggs": [
@@ -2699,7 +2753,6 @@
               "id": "9",
               "settings": {
                 "min_doc_count": 1,
-                "missing": null,
                 "order": "desc",
                 "orderBy": "4",
                 "size": "0"
@@ -2727,7 +2780,6 @@
               "id": "13",
               "settings": {
                 "min_doc_count": "1",
-                "missing": null,
                 "order": "desc",
                 "orderBy": "4",
                 "size": "0"
@@ -2765,8 +2817,6 @@
           "timeField": "date_range"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Published Policies (as reported)",
       "transformations": [
         {
@@ -2816,12 +2866,15 @@
       "type": "table"
     },
     {
-      "datasource": "$datasourceag",
+      "datasource": {
+        "uid": "$datasourceag"
+      },
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": null,
-            "filterable": false
+            "displayMode": "auto",
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -2923,6 +2976,7 @@
           }
         ]
       },
+      "fixed_interval": "",
       "gridPos": {
         "h": 9,
         "w": 24,
@@ -2930,9 +2984,15 @@
         "y": 81
       },
       "id": 14,
-      "fixed_interval": "",
       "links": [],
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": [
           {
@@ -2941,7 +3001,7 @@
           }
         ]
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "bucketAggs": [
@@ -3018,8 +3078,6 @@
           "timeField": "date_range"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Top 1000 Message Source IP Addresses",
       "transformations": [
         {
@@ -3040,12 +3098,15 @@
       "type": "table"
     },
     {
-      "datasource": "$datasourceag",
+      "datasource": {
+        "uid": "$datasourceag"
+      },
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": null,
-            "filterable": false
+            "displayMode": "auto",
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -3146,6 +3207,13 @@
       "id": 16,
       "links": [],
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": [
           {
@@ -3154,7 +3222,7 @@
           }
         ]
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "bucketAggs": [
@@ -3207,7 +3275,6 @@
               "id": "9",
               "settings": {
                 "min_doc_count": 1,
-                "missing": null,
                 "order": "desc",
                 "orderBy": "4",
                 "size": "0"
@@ -3245,8 +3312,6 @@
           "timeField": "date_range"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "SPF Alignment Details",
       "transformations": [
         {
@@ -3268,12 +3333,15 @@
       "type": "table"
     },
     {
-      "datasource": "$datasourceag",
+      "datasource": {
+        "uid": "$datasourceag"
+      },
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": null,
-            "filterable": false
+            "displayMode": "auto",
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -3378,6 +3446,13 @@
       "id": 40,
       "links": [],
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": [
           {
@@ -3386,7 +3461,7 @@
           }
         ]
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "bucketAggs": [
@@ -3439,7 +3514,6 @@
               "id": "9",
               "settings": {
                 "min_doc_count": 1,
-                "missing": null,
                 "order": "desc",
                 "orderBy": "4",
                 "size": "0"
@@ -3490,8 +3564,6 @@
           "timeField": "date_range"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "DKIM Alignment Details",
       "transformations": [
         {
@@ -3518,7 +3590,10 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "P908EE4D5633EB9E4"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -3531,12 +3606,15 @@
       "type": "row"
     },
     {
-      "datasource": "$datasourcefo",
+      "datasource": {
+        "uid": "$datasourcefo"
+      },
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": null,
-            "filterable": false
+            "displayMode": "auto",
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -3625,10 +3703,17 @@
       "id": 20,
       "links": [],
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "bucketAggs": [
@@ -3769,8 +3854,6 @@
           "timeField": "arrival_date"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Forensic Samples",
       "transformations": [
         {
@@ -3803,15 +3886,11 @@
         "#FA6400",
         "#37872D"
       ],
-      "datasource": "$datasourcefo",
+      "datasource": {
+        "uid": "$datasourcefo"
+      },
       "decimals": 0,
       "esMetric": "Count",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "gridPos": {
         "h": 11,
         "w": 8,
@@ -3885,8 +3964,6 @@
         }
       ],
       "thresholds": "100,0",
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Forensic Sample Sources by Country",
       "type": "grafana-worldmap-panel",
       "unitPlural": "",
@@ -3894,22 +3971,17 @@
       "valueName": "total"
     },
     {
-      "datasource": "$datasourcefo",
+      "datasource": {
+        "uid": "$datasourcefo"
+      },
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": null,
-            "filterable": false
+            "displayMode": "auto",
+            "filterable": false,
+            "inspect": false
           },
-          "mappings": [
-            {
-              "from": "",
-              "id": 0,
-              "text": "",
-              "to": "",
-              "type": 1
-            }
-          ],
+          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -3976,10 +4048,17 @@
       "id": 23,
       "links": [],
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "bucketAggs": [
@@ -4014,8 +4093,6 @@
           "timeField": "arrival_date"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "DMARC Forensic Sample Source Countries",
       "transformations": [
         {
@@ -4032,12 +4109,15 @@
       "type": "table"
     },
     {
-      "datasource": "$datasourcefo",
+      "datasource": {
+        "uid": "$datasourcefo"
+      },
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": null,
-            "filterable": false
+            "displayMode": "auto",
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -4124,6 +4204,13 @@
       "id": 24,
       "links": [],
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": [
           {
@@ -4132,7 +4219,7 @@
           }
         ]
       },
-      "pluginVersion": "7.4.5",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "bucketAggs": [
@@ -4209,8 +4296,6 @@
           "timeField": "arrival_date"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Top 1000 Forensic Sample Source IP Addresses",
       "transformations": [
         {
@@ -4232,7 +4317,7 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 27,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [
     "DKIM",
@@ -4248,8 +4333,6 @@
           "text": "dmarc-ag",
           "value": "dmarc-ag"
         },
-        "description": null,
-        "error": null,
         "hide": 2,
         "includeAll": false,
         "label": "Datasource: Aggregate",
@@ -4268,8 +4351,6 @@
           "text": "dmarc-fo",
           "value": "dmarc-fo"
         },
-        "description": null,
-        "error": null,
         "hide": 2,
         "includeAll": false,
         "label": "Datasource: Forensic",
@@ -4283,16 +4364,16 @@
         "type": "datasource"
       },
       {
-        "allValue": null,
         "current": {
           "selected": false,
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "$datasourceag",
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "$datasourceag"
+        },
         "definition": "{\"find\":\"terms\",\"field\":\"header_from.keyword\"}",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "From Domain",
@@ -4305,7 +4386,6 @@
         "skipUrlSync": false,
         "sort": 5,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -4319,8 +4399,6 @@
           "text": "1d",
           "value": "1d"
         },
-        "description": null,
-        "error": null,
         "hide": 2,
         "label": "Interval",
         "name": "interval",
@@ -4367,8 +4445,9 @@
       "30d"
     ]
   },
-  "timezone": "",
+  "timezone": "browser",
   "title": "DMARC Reports",
   "uid": "SDksirRWz",
-  "version": 114
+  "version": 6,
+  "weekStart": "monday"
 }
