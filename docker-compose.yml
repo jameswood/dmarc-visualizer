@@ -4,7 +4,7 @@ services:
     build: ./parsedmarc/
     volumes:
       - ./output_files:/output
-    command: parsedmarc --verbose -c /parsedmarc.ini
+    command: parsedmarc -c /parsedmarc.ini
     depends_on:
       - elasticsearch
     restart: on-failure
@@ -28,3 +28,5 @@ services:
     environment:
       GF_INSTALL_PLUGINS: grafana-piechart-panel,grafana-worldmap-panel
       GF_AUTH_ANONYMOUS_ENABLED: 'true'
+    volumes:
+      - ./dashboards:/var/lib/grafana/dashboards
